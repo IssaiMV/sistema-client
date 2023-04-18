@@ -1,0 +1,21 @@
+.sidebar {
+    padding: 48px 0 0; /* Ajustar la altura del menú para incluir la barra superior */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+  
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px); /* Ajustar la altura del menú para que se ajuste al tamaño de la ventana */
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scroll para desplazarse si el menú es más largo que la ventana */
+  }
+  
+  /* Estilos para el enlace activo en el menú */
+  .nav-link.active {
+    font-weight: 500;
+    color: #fff;
+    background-color: #007bff;
+  }
+  

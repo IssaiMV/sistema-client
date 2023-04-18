@@ -1,0 +1,35 @@
+<nav class="bg-light sidebar" *ngIf="authService.isLoggedIn()">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="toggle()">
+                    <i class="fa fa-fw fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="authService.isAdmin()">
+                <a class="nav-link" routerLink="/usuarios" routerLinkActive="active" (click)="toggle()">
+                    <i class="fa fa-fw fa-users"></i>
+                    Usuarios
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/mi-perfil" routerLinkActive="active" (click)="toggle()">
+                    <i class="fa fa-fw fa-shopping-cart"></i>
+                    Mi perfil
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/reuniones" routerLinkActive="active" (click)="toggle()">
+                    <i class="fa fa-fw fa-money"></i>
+                    Reuniones
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" (click)="logout()">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

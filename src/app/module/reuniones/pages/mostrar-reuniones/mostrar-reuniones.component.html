@@ -1,0 +1,41 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Reuniones</h2>
+        </div>
+        <div class="col-md-6 text-right align-self-center">
+            <button *ngIf="esAdministrador" routerLink="/reuniones/agregar" class="btn btn-primary mb-3">
+                Agregar reunión
+            </button>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha y hora</th>
+                <th>Enlace</th>
+                <th>Coordinador</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reunion of reuniones">
+                <td>{{ reunion.titulo }}</td>
+                <td>{{ reunion.descripcion }}</td>
+                <td>{{ reunion.fecha_hora | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td><a href="{{ reunion.enlace }}" target="_blank">{{ reunion.enlace }}</a></td>
+                <td>{{ reunion.coordinadorId }}</td>
+                <td>{{ reunion.estatus }}</td>
+                <td>
+                    <button routerLink="/reuniones/{{ reunion.id }}/editar"
+                        class="btn btn-warning btn-sm">Editar</button>
+                    <button routerLink="/reuniones/{{ reunion.id }}" class="btn btn-info btn-sm">Detalles</button>
+                    <button (click)="eliminarReunion(reunion.id)" class="btn btn-danger btn-sm">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
