@@ -11,17 +11,22 @@ import { Reunion } from 'src/app/shared/models/reunion.model';
 export class MostrarReunionesComponent {
   reuniones: Reunion[] = [];
   esAdministrador: boolean;
+  esProfesor: boolean;
 
   constructor(
     private reunionService: ReunionHttpService,
     private authService: AuthService
   ) {
     this.esAdministrador = this.authService.isCoordinador();
+    this.esProfesor = this.authService.isProfesor();
   }
 
   ngOnInit() {
     this.reunionService.getAll().subscribe(data => {
       this.reuniones = data;
+      if (this.esProfesor) {
+        this.reuniones = this.reuniones.filter((reunion: Reunion) => reunion.coordinadorId === this.authService.getCoordinadorId())
+      }
     });
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthHttpService } from '../http/auth/auth.service';
 import { RolUsuario } from 'src/app/shared/enums/rol-usuario.enum';
+import { Usuario } from 'src/app/shared/models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,12 @@ export class AuthService {
     return rol;
   }
 
+  getUserFromToken(): Usuario {
+    const token = this.getToken();
+    const user: Usuario = JSON.parse(atob(token.split('.')[1]));
+    return user;
+  }
+
 
   isLoggedIn(): boolean {
     const session = localStorage.getItem('session');
@@ -57,6 +64,12 @@ export class AuthService {
   isCoordinador(): boolean {
     const role = this.getRoleFromToken();
     return role === RolUsuario.COORDINADOR;
+  }
+  getCoordinadorId(): number {
+    const token = this.getToken();
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const coordinadorId = payload.coordinadorId;
+    return coordinadorId;
   }
 
   async authenticate(email: string, password: string): Promise<boolean> {

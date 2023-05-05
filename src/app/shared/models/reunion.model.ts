@@ -1,3 +1,5 @@
+import { Asistencia } from "./asistencia.model";
+
 export interface Reunion {
     id: number;
     titulo: string;
@@ -6,4 +8,5 @@ export interface Reunion {
     enlace: string;
     coordinadorId: number;
     estatus: string;
+    asistencias: Asistencia[] | number[];
 }

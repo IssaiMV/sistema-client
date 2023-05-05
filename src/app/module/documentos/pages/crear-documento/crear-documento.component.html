@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <h2 class="mb-4">Crear nuevo documento</h2>
+    <form [formGroup]="documentoForm" (ngSubmit)="crearDocumento()" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre">
+            <div *ngIf="nombre?.invalid && (nombre?.dirty || nombre?.touched)" class="invalid-feedback">
+                <div *ngIf="nombre?.errors?.['required']">El nombre es requerido</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="tipo">Tipo:</label>
+            <select class="form-control" id="tipo" formControlName="tipo">
+                <option value="" disabled selected>Seleccione un tipo</option>
+                <option value="Evidencia">Evidencia</option>
+                <option value="Planeacion">Planeación</option>
+            </select>
+            <div *ngIf="tipo?.invalid && (tipo?.dirty || tipo?.touched)" class="invalid-feedback">
+                <div *ngIf="tipo?.errors?.['required']">El tipo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ruta">Archivo:</label>
+            <input type="file" class="form-control" id="archivo" formControlName="archivo"
+                (change)="onFileSelected($event)" accept=".pdf" required>
+            <div *ngIf="archivoSeleccionado" class="alert alert-primary mt-2">Archivo seleccionado:
+                {{archivoSeleccionado.name}}</div>
+            <div *ngIf="archivo?.invalid && (archivo?.dirty || archivo?.touched)">
+                <div *ngIf="archivo?.errors?.['required']">
+                    Debe seleccionar un archivo.
+                </div>
+                <div *ngIf="archivo?.errors?.['fileSize']">
+                    El tamaño del archivo no debe ser mayor a 10MB.
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!documentoForm.valid || !archivoSeleccionado">Crear
+            documento</button>
+    </form>
+</div>

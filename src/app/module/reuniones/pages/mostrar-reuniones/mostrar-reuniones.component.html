@@ -18,7 +18,7 @@
                 <th>Enlace</th>
                 <th>Coordinador</th>
                 <th>Estatus</th>
-                <th>Acciones</th>
+                <th *ngIf="!esProfesor">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +29,7 @@
                 <td><a href="{{ reunion.enlace }}" target="_blank">{{ reunion.enlace }}</a></td>
                 <td>{{ reunion.coordinadorId }}</td>
                 <td>{{ reunion.estatus }}</td>
-                <td>
+                <td *ngIf="!esProfesor">
                     <button routerLink="/reuniones/{{ reunion.id }}/editar"
                         class="btn btn-warning btn-sm">Editar</button>
                     <button routerLink="/reuniones/{{ reunion.id }}" class="btn btn-info btn-sm">Detalles</button>

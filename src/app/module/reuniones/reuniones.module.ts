@@ -5,6 +5,7 @@ import { REUNIONES_ROUTES } from './reuniones.routes';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgregarReunionComponent } from './pages/agregar-reunion/agregar-reunion.component';
 import { EditarReunionComponent } from './pages/editar-reunion/editar-reunion.component';
+import { DetallesReunionComponent } from './pages/detalles-reunion/detalles-reunion.component';
 
 
 
@@ -12,7 +13,8 @@ import { EditarReunionComponent } from './pages/editar-reunion/editar-reunion.co
   declarations: [
     MostrarReunionesComponent,
     AgregarReunionComponent,
-    EditarReunionComponent
+    EditarReunionComponent,
+    DetallesReunionComponent
   ],
   imports: [
     CommonModule,

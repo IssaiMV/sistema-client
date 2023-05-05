@@ -43,6 +43,22 @@ const routes: Routes = [
       )
   },
   {
+    path: 'documentos',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./module/documentos/documentos.module').then(
+        (module) => module.DocumentosModule
+      )
+  },
+  {
+    path: 'encuestas',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./module/encuestas/encuestas.module').then(
+        (module) => module.EncuestasModule
+      )
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'prefix',

@@ -5,48 +5,64 @@
         <div class="form-group">
             <label for="titulo">Título</label>
             <input type="text" id="titulo" formControlName="titulo" class="form-control">
-            <!-- <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)">
-                <small class="form-text text-danger" *ngIf="titulo.errors.['required']">El título es
+            <div *ngIf="titulo?.invalid && (titulo?.dirty || titulo?.touched)">
+                <small class="form-text text-danger" *ngIf="titulo?.errors?.['required']">El título es
                     requerido</small>
-                <small class="form-text text-danger" *ngIf="titulo.errors.['minlength']">El título
-                    debe tener al menos {{ titulo.errors.['minlength'].requiredLength }}
+                <small class="form-text text-danger" *ngIf="titulo?.errors?.['minlength']">El título
+                    debe tener al menos {{ titulo?.errors?.['minlength'].requiredLength }}
                     caracteres</small>
-                <small class="form-text text-danger" *ngIf="titulo.errors.['maxlength']">El título
-                    debe tener como máximo {{ titulo.errors.['maxlength'].requiredLength }}
+                <small class="form-text text-danger" *ngIf="titulo?.errors?.['maxlength']">El título
+                    debe tener como máximo {{ titulo?.errors?.['maxlength'].requiredLength }}
                     caracteres</small>
-            </div> -->
+            </div>
         </div>
         <div class="form-group">
             <label for="descripcion">Descripción</label>
             <textarea id="descripcion" formControlName="descripcion" class="form-control"></textarea>
-            <!-- <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
-                <small class="form-text text-danger" *ngIf="descripcion.errors.['required']">La
+            <div *ngIf="descripcion?.invalid && (descripcion?.dirty || descripcion?.touched)">
+                <small class="form-text text-danger" *ngIf="descripcion?.errors?.['required']">La
                     descripción es requerida</small>
-                <small class="form-text text-danger" *ngIf="descripcion.errors.['minlength']">La
-                    descripción debe tener al menos {{ descripcion.errors.['minlength'] }}
+                <small class="form-text text-danger" *ngIf="descripcion?.errors?.['minlength']">La
+                    descripción debe tener al menos {{ descripcion?.errors?.['minlength'].requiredLength }}
                     caracteres</small>
-                <small class="form-text text-danger" *ngIf="descripcion.errors.['maxlength']">La
+                <small class="form-text text-danger" *ngIf="descripcion?.errors?.['maxlength']">La
                     descripción debe tener como máximo {{
-                    descripcion.errors.['maxlength'] }} caracteres</small>
-            </div> -->
+                    descripcion?.errors?.['maxlength'].requiredLength }} caracteres</small>
+            </div>
         </div>
         <div class="form-group">
             <label for="fecha_hora">Fecha y hora</label>
-            <input type="datetime-local" id="fecha_hora" formControlName="fecha_hora" class="form-control">
-            <!-- <div *ngIf="fecha_hora.invalid && (fecha_hora.dirty || fecha_hora.touched)">
-                <small class="form-text text-danger" *ngIf="fecha_hora.errors.['required']">La fecha
+            <input type="datetime-local" id="fecha_hora" formControlName="fecha_hora" step="2" class="form-control">
+            <div *ngIf="fecha_hora?.invalid && (fecha_hora?.dirty || fecha_hora?.touched)">
+                <small class="form-text text-danger" *ngIf="fecha_hora?.errors?.['required']">La fecha
                     y hora son requeridas</small>
-            </div> -->
+            </div>
         </div>
         <div class="form-group">
             <label for="enlace">Enlace</label>
             <input type="url" id="enlace" formControlName="enlace" class="form-control">
-            <!-- <div *ngIf="enlace.invalid && (enlace.dirty || enlace.touched)">
-                <small class="form-text text-danger" *ngIf="enlace.errors.['required']">El enlace es
+            <div *ngIf="enlace?.invalid && (enlace?.dirty || enlace?.touched)">
+                <small class="form-text text-danger" *ngIf="enlace?.errors?.['required']">El enlace es
                     requerido</small>
-                <small class="form-text text-danger" *ngIf="enlace.errors.['pattern']">El enlace
+                <small class="form-text text-danger" *ngIf="enlace?.errors?.['pattern']">El enlace
                     debe tener un formato de URL válido</small>
-            </div> -->
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="estatus">Estatus</label>
+            <select class="form-control" id="estatus" formControlName="estatus" required>
+                <option value="">Selecciona un estatus</option>
+                <option *ngFor="let estatus of estatusList" [value]="estatus">{{ estatus }}</option>
+            </select>
+            <div *ngIf="estatus?.invalid && (estatus?.dirty || estatus?.touched)">
+                <small class="text-danger" *ngIf="estatus?.errors?.['required']">El estatus es requerido</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="asistentes">Asistentes</label>
+            <select class="form-control" id="asistentes" formControlName="asistencias" multiple>
+                <option *ngFor="let usuario of usuariosList" [value]="usuario.id">{{ nombreCompleto(usuario) }}</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="reunionForm.invalid">Guardar</button>
         <a [routerLink]="['/reuniones']" class="btn btn-secondary">Cancelar</a>

@@ -23,6 +23,13 @@ export class UsuarioHttpService {
     return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
   }
 
+  // Obtener varios usuarios por sus IDs
+  getUsuariosByIds(ids: number[]): Observable<Usuario[]> {
+    const idParams = ids.join(',');
+    const url = `${this.apiUrl}/ids/${idParams}`;
+    return this.http.get<Usuario[]>(url);
+  }
+
   // Operación de creación (Create)
   create(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(this.apiUrl, usuario);

@@ -21,6 +21,7 @@ export class ReunionHttpService {
   }
 
   create(reunion: Reunion): Observable<Reunion> {
+    console.log(reunion);
     return this.http.post<Reunion>(this.API_URL, reunion);
   }
 

@@ -1,0 +1,51 @@
+<div class="container mt-5">
+    <div class="container">
+        <h1 class="text-center">Contestar nueva Encuesta</h1>
+        <form [formGroup]="encuestaForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label for="cantidadAlumnos" class="form-label">Cantidad de Alumnos</label>
+                <input type="number" class="form-control" formControlName="cantidadAlumnos" id="cantidadAlumnos"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="cantidadAprobados" class="form-label">Cantidad de Alumnos Aprobados</label>
+                <input type="number" class="form-control" formControlName="cantidadAprobados" id="cantidadAprobados"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="cantidadReprobados" class="form-label">Cantidad de Alumnos Reprobados</label>
+                <input type="number" class="form-control" formControlName="cantidadReprobados" id="cantidadReprobados"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="observaciones" class="form-label">Observaciones</label>
+                <textarea class="form-control" formControlName="observaciones" id="observaciones"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="semestre" class="form-label">Semestre</label>
+                <select class="form-control" formControlName="semestre" id="semestre" (change)="onSemestreChange()">
+                    <option value="">Seleccione un semestre</option>
+                    <option *ngFor="let semestre of semestres" [value]="semestre.id">{{ semestre.nombre }}</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="grupo" class="form-label">Grupo</label>
+                <select class="form-control" formControlName="grupo" id="grupo">
+                    <option value="">Seleccione un grupo</option>
+                    <option *ngFor="let grupo of grupos" [value]="grupo.id">{{ grupo.nombre }}</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="unidadDeAprendizaje" class="form-label">Unidad de Aprendizaje</label>
+                <select class="form-control" formControlName="unidadDeAprendizaje" id="unidadDeAprendizaje">
+                    <option value="">Seleccione una unidad de aprendizaje</option>
+                    <option *ngFor="let unidad of unidades" [value]="unidad.id">{{ unidad.nombre }}</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+
+
+    </div>
+
+</div>
