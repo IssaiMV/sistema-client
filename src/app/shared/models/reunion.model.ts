@@ -1,4 +1,5 @@
 import { Asistencia } from "./asistencia.model";
+import { Usuario } from "./usuario.model";
 
 export interface Reunion {
     id: number;
@@ -7,6 +8,7 @@ export interface Reunion {
     fecha_hora: Date;
     enlace: string;
     coordinadorId: number;
+    coordinador?: Usuario;
     estatus: string;
     asistencias: Asistencia[] | number[];
 }

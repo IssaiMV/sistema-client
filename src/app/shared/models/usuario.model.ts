@@ -7,4 +7,5 @@ export interface Usuario {
     password: string;
     rol: string;
     coordinadorId: number;
+    coordinador: Usuario;
 }

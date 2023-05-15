@@ -28,7 +28,6 @@ export class EditarUsuarioComponent {
       apellidoPaterno: ['', Validators.required],
       apellidoMaterno: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
       rol: [Validators.required],
       coordinadorId: [null]
     });

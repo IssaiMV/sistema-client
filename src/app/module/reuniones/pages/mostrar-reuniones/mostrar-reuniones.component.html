@@ -27,8 +27,8 @@
                 <td>{{ reunion.descripcion }}</td>
                 <td>{{ reunion.fecha_hora | date:'dd/MM/yyyy HH:mm' }}</td>
                 <td><a href="{{ reunion.enlace }}" target="_blank">{{ reunion.enlace }}</a></td>
-                <td>{{ reunion.coordinadorId }}</td>
-                <td>{{ reunion.estatus }}</td>
+                <td>{{ userService.nombreCompleto(reunion.coordinador) }}</td>
+                <td> <span class="badge" [ngClass]="getBgStatus(reunion.estatus)">{{ reunion.estatus }}</span></td>
                 <td *ngIf="!esProfesor">
                     <button routerLink="/reuniones/{{ reunion.id }}/editar"
                         class="btn btn-warning btn-sm">Editar</button>

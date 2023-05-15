@@ -3,25 +3,6 @@
         <h1 class="text-center">Contestar nueva Encuesta</h1>
         <form [formGroup]="encuestaForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-                <label for="cantidadAlumnos" class="form-label">Cantidad de Alumnos</label>
-                <input type="number" class="form-control" formControlName="cantidadAlumnos" id="cantidadAlumnos"
-                    required>
-            </div>
-            <div class="mb-3">
-                <label for="cantidadAprobados" class="form-label">Cantidad de Alumnos Aprobados</label>
-                <input type="number" class="form-control" formControlName="cantidadAprobados" id="cantidadAprobados"
-                    required>
-            </div>
-            <div class="mb-3">
-                <label for="cantidadReprobados" class="form-label">Cantidad de Alumnos Reprobados</label>
-                <input type="number" class="form-control" formControlName="cantidadReprobados" id="cantidadReprobados"
-                    required>
-            </div>
-            <div class="mb-3">
-                <label for="observaciones" class="form-label">Observaciones</label>
-                <textarea class="form-control" formControlName="observaciones" id="observaciones"></textarea>
-            </div>
-            <div class="mb-3">
                 <label for="semestre" class="form-label">Semestre</label>
                 <select class="form-control" formControlName="semestre" id="semestre" (change)="onSemestreChange()">
                     <option value="">Seleccione un semestre</option>
@@ -42,10 +23,51 @@
                     <option *ngFor="let unidad of unidades" [value]="unidad.id">{{ unidad.nombre }}</option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="cantidadAprobados" class="form-label">Cantidad de Alumnos Aprobados</label>
+                <input type="number" class="form-control" formControlName="cantidadAprobados" id="cantidadAprobados"
+                    (change)="updateCantidadAlumnos()" required>
+            </div>
+            <div class="mb-3">
+                <label for="cantidadReprobados" class="form-label">Cantidad de Alumnos Reprobados</label>
+                <input type="number" class="form-control" formControlName="cantidadReprobados" id="cantidadReprobados"
+                    (change)="updateCantidadAlumnos()" required>
+            </div>
+            <div class="mb-3">
+                <label for="cantidadAlumnos" class="form-label">Cantidad de Alumnos</label>
+                <input type="number" class="form-control" id="cantidadAlumnos" formControlName="cantidadAlumnos"
+                    readonly>
+            </div>
+            <div class="mb-3">
+                <label for="problematica" class="form-label">Problemática de grupo</label>
+                <select class="form-control" formControlName="problematica" id="problematica">
+                    <option value="">Seleccione una problemática</option>
+                    <option *ngFor="let problematica of problematicas" [value]="problematica.id">{{ problematica.nombre
+                        }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mayor dificultad para los estudiantes</label>
+                <div formArrayName="mayorDificultad">
+                    <div *ngFor="let dificultad of mayorDificultad?.controls; let i=index" [formGroupName]="i"
+                        class="row">
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" formControlName="razon" placeholder="Razón">
+                        </div>
+                        <div class="col-md-5">
+                            <textarea rows="3" class="form-control" formControlName="observacion"
+                                placeholder="Observación"></textarea>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger" (click)="removeDificultad(i)">Eliminar</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary mt-3" (click)="addDificultad()">Agregar
+                        dificultad</button>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
-
-
     </div>
-
 </div>

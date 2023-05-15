@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { find } from 'rxjs';
 import { AuthService } from 'src/app/core/authentication/auth.service';
 import { EncuestaHttpService } from 'src/app/core/http/encuesta/encuesta.service';
+import { ProblematicasGrupoHttpService } from 'src/app/core/http/problematicas-grupo/problematicas.grupo.http.service';
 import { SemestreHttpService } from 'src/app/core/http/semestre/semestre.http.service';
 import { UnidadDeAprendizajeHttpService } from 'src/app/core/http/unidade-de-aprendizaje/unidad.de.aprendizaje.http.service';
 import { Encuesta } from 'src/app/shared/models/encuesta.model';
 import { Grupo } from 'src/app/shared/models/grupo.model';
+import { ProblematicaGrupo } from 'src/app/shared/models/problematicas.grupo.model';
 import { SemestreGrupo } from 'src/app/shared/models/semestre-grupo.model';
 import { Semestre } from 'src/app/shared/models/semestre.model';
 import { UnidadDeAprendizaje } from 'src/app/shared/models/unidad-de-aprendizaje.model';
@@ -23,6 +25,7 @@ export class ContestarEncuestaComponent {
   grupos: Grupo[] = [];
   unidades: UnidadDeAprendizaje[] = [];
   semestreGrupos: SemestreGrupo[] = [];
+  problematicas: ProblematicaGrupo[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -30,16 +33,21 @@ export class ContestarEncuestaComponent {
     private encuestaService: EncuestaHttpService,
     private semestreService: SemestreHttpService,
     private unidadService: UnidadDeAprendizajeHttpService,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private problematicasGrupoService: ProblematicasGrupoHttpService
   ) {
     this.encuestaForm = this.fb.group({
-      cantidadAlumnos: ['', Validators.required],
-      cantidadAprobados: ['', Validators.required],
-      cantidadReprobados: ['', Validators.required],
-      observaciones: [''],
+      cantidadAlumnos: ['', [Validators.required, Validators.min(0)]],
+      cantidadAprobados: ['', [Validators.required, Validators.min(0)]],
+      cantidadReprobados: ['', [Validators.required, Validators.min(0)]],
       semestre: ['', Validators.required],
       grupo: ['', Validators.required],
-      unidadDeAprendizaje: ['', Validators.required]
+      unidadDeAprendizaje: ['', Validators.required],
+      mayorDificultad: this.fb.array([
+        this.initMayorDificultad()
+      ]),
+      problematica: ['', Validators.required]
     });
   }
 
@@ -49,6 +57,9 @@ export class ContestarEncuestaComponent {
     });
     this.unidadService.getAll().subscribe((unidades: Array<UnidadDeAprendizaje>) => {
       this.unidades = unidades;
+    });
+    this.problematicasGrupoService.getAll().subscribe((problematicas: Array<ProblematicaGrupo>) => {
+      this.problematicas = problematicas;
     });
   }
   get cantidadAlumnos() {
@@ -63,10 +74,6 @@ export class ContestarEncuestaComponent {
     return this.encuestaForm.get('cantidadReprobados');
   }
 
-  get observaciones() {
-    return this.encuestaForm.get('observaciones');
-  }
-
   get semestre() {
     return this.encuestaForm.get('semestre');
   }
@@ -77,6 +84,30 @@ export class ContestarEncuestaComponent {
 
   get unidadDeAprendizaje() {
     return this.encuestaForm.get('unidadDeAprendizaje');
+  }
+  get mayorDificultad(): any | null {
+    return this.encuestaForm.get('mayorDificultad');
+  }
+
+  initMayorDificultad() {
+    return new FormGroup({
+      razon: new FormControl('', Validators.required),
+      observacion: new FormControl('', Validators.required)
+    });
+  }
+
+  addDificultad() {
+    const control = this.encuestaForm.get('mayorDificultad') as FormArray;
+    control.push(this.initMayorDificultad());
+  }
+
+  removeDificultad(index: number) {
+    const control = this.encuestaForm.get('mayorDificultad') as FormArray;
+    if (control.length > 1) {
+      control.removeAt(index)
+    } else {
+      control.reset()
+    }
   }
 
   onSubmit(): void {
@@ -114,5 +145,17 @@ export class ContestarEncuestaComponent {
     return this.semestreGrupos.find((semestreGrupo: SemestreGrupo) => semestreGrupo.grupoId === grupoId && semestreGrupo.semestreId === semestreId)?.id;
   }
 
+  updateCantidadAlumnos() {
+    const cantidadAprobados = parseInt(this.cantidadAprobados?.value);
+    const cantidadReprobados = parseInt(this.cantidadReprobados?.value);
+    if (!Number.isNaN(cantidadAprobados) && !Number.isNaN(cantidadAprobados)) {
+      this.cantidadAlumnos?.setValue(cantidadAprobados + cantidadReprobados);
+    }
+  }
+
+  test() {
+    console.log(this.mayorDificultad.controls);
+    return "holas"
+  }
 }
 

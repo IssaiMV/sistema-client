@@ -3,34 +3,34 @@
         <div class="col-md-6">
             <h2>Listado de Encuestas Contestadas</h2>
         </div>
-        <div class="col-md-6 text-right align-self-center">
-            <button routerLink="/encuestas/contestar" class="btn btn-primary">Crear nuevo documento</button>
+        <div class="col-md-6 text-right align-self-center" *ngIf="esPropietario">
+            <button routerLink="/encuestas/contestar" class="btn btn-primary">Crear nueva encuesta</button>
         </div>
     </div>
     <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col" *ngIf="!esProfesor">Profesor</th>
+                    <th scope="col">Semestre</th>
+                    <th scope="col">Grupo</th>
+                    <th scope="col">Unidad de Aprendizaje</th>
                     <th scope="col">Cantidad de Alumnos</th>
                     <th scope="col">Cantidad de Aprobados</th>
                     <th scope="col">Cantidad de Reprobados</th>
                     <th scope="col">Observaciones</th>
-                    <th scope="col">Semestre</th>
-                    <th scope="col">Grupo</th>
-                    <th scope="col">Unidad de Aprendizaje</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let encuesta of encuestas">
-                    <td>{{ encuesta.id }}</td>
+                    <td *ngIf="!esProfesor">{{userService.nombreCompleto(encuesta.usuario)}}</td>
+                    <td>{{ encuesta.semestreGrupo.semestre.nombre }}</td>
+                    <td>{{ encuesta.semestreGrupo.grupo.nombre }}</td>
+                    <td>{{ encuesta.unidadDeAprendizaje.nombre }}</td>
                     <td>{{ encuesta.cantidadAlumnos }}</td>
                     <td>{{ encuesta.cantidadAprobados }}</td>
                     <td>{{ encuesta.cantidadReprobados }}</td>
                     <td>{{ encuesta.observaciones }}</td>
-                    <td>{{ encuesta.semestreGrupo.semestre.nombre }}</td>
-                    <td>{{ encuesta.semestreGrupo.grupo.nombre }}</td>
-                    <td>{{ encuesta.unidadDeAprendizaje.nombre }}</td>
                 </tr>
             </tbody>
         </table>

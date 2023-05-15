@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/core/authentication/auth.service';
 import { ReunionHttpService } from 'src/app/core/http/reuniones/reuniones.service';
+import { UserService } from 'src/app/core/service/user.service';
 import { Reunion } from 'src/app/shared/models/reunion.model';
 
 @Component({
@@ -15,7 +16,8 @@ export class MostrarReunionesComponent {
 
   constructor(
     private reunionService: ReunionHttpService,
-    private authService: AuthService
+    private authService: AuthService,
+    public userService: UserService
   ) {
     this.esAdministrador = this.authService.isCoordinador();
     this.esProfesor = this.authService.isProfesor();
@@ -27,6 +29,9 @@ export class MostrarReunionesComponent {
       if (this.esProfesor) {
         this.reuniones = this.reuniones.filter((reunion: Reunion) => reunion.coordinadorId === this.authService.getCoordinadorId())
       }
+      if (this.authService.isCoordinador()) {
+        this.reuniones = this.reuniones.filter((reunion: Reunion) => reunion.coordinadorId === this.authService.getIdFromToken())
+      }
     });
   }
 
@@ -36,5 +41,11 @@ export class MostrarReunionesComponent {
         this.reuniones = this.reuniones.filter(r => r.id !== id);
       });
     }
+  }
+  getBgStatus(status: string): string {
+    if (status === 'Realizada') return 'bg-success';
+    if (status === 'Pendiente') return 'bg-warning';
+    if (status === 'Cancelada') return 'bg-danger';
+    return 'bg-secondary';
   }
 }

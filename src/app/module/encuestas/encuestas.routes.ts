@@ -8,6 +8,10 @@ const v2Routes: Routes = [
         component: MostrarEncuestasComponent,
     },
     {
+        path: 'profesor/:id',
+        component: MostrarEncuestasComponent,
+    },
+    {
         path: 'contestar',
         component: ContestarEncuestaComponent,
     }

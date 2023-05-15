@@ -28,8 +28,9 @@ export class MiPerfilComponent {
       apellidoPaterno: ['', Validators.required],
       apellidoMaterno: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
+      password: [''],
+      confirmPassword: [''],
+    }, { validator: this.matchingPasswords('password', 'confirmPassword') });
 
   }
 
@@ -52,9 +53,26 @@ export class MiPerfilComponent {
     }
   }
 
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+    return (group: FormGroup): { [key: string]: any } => {
+      let password = group.controls[passwordKey];
+      let confirmPassword = group.controls[confirmPasswordKey];
+
+      if (password.value !== confirmPassword.value) {
+        return {
+          mismatchedPasswords: true
+        };
+      }
+
+      return {};
+    };
+  }
+
   get nombre() { return this.form.get('nombre'); }
   get apellidoPaterno() { return this.form.get('apellidoPaterno'); }
   get apellidoMaterno() { return this.form.get('apellidoMaterno'); }
   get email() { return this.form.get('email'); }
   get password() { return this.form.get('password'); }
+  get confirmPassword() { return this.form.get('confirmPassword'); }
+  get formControls() { return this.form.controls; }
 }

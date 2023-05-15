@@ -3,29 +3,27 @@
         <div class="col-md-6">
             <h2>Documentos</h2>
         </div>
-        <div class="col-md-6 text-right align-self-center">
+        <div class="col-md-6 text-right align-self-center" *ngIf="esPropietario">
             <button routerLink="/documentos/crear" class="btn btn-primary">Crear nuevo documento</button>
         </div>
     </div>
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>Tipo</th>
                 <th>Fecha y hora</th>
                 <th *ngIf="!esProfesor">Usuario</th>
-                <th>Acciones</th>
+                <th *ngIf="esPropietario">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let documento of documentos">
-                <td>{{documento.id}}</td>
                 <td><a href="#" (click)="descargarDocumento(documento)">{{ documento.nombre }}</a></td>
                 <td>{{documento.tipo}}</td>
                 <td>{{documento.fecha_hora | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
-                <td *ngIf="!esProfesor">{{documento.usuarioId}}</td>
-                <td>
+                <td *ngIf="!esProfesor">{{userService.nombreCompleto(documento.usuario)}}</td>
+                <td *ngIf="esPropietario">
                     <a routerLink="/documentos/{{ documento.id }}/editar/" class="btn btn-primary btn-sm mr-1">
                         <i class="bi bi-pencil-square">Editar</i>
                     </a>

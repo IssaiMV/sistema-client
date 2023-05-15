@@ -4,19 +4,7 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="toggle()">
                     <i class="fa fa-fw fa-home"></i>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item" *ngIf="authService.isAdmin()">
-                <a class="nav-link" routerLink="/usuarios" routerLinkActive="active" (click)="toggle()">
-                    <i class="fa fa-fw fa-users"></i>
-                    Usuarios
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/mi-perfil" routerLinkActive="active" (click)="toggle()">
-                    <i class="fa fa-fw fa-shopping-cart"></i>
-                    Mi perfil
+                    Inicio
                 </a>
             </li>
             <li class="nav-item">
@@ -31,10 +19,28 @@
                     Encuestas
                 </a>
             </li>
+            <li class="nav-item" *ngIf="authService.isCoordinador()">
+                <a class="nav-link" routerLink="/profesores" routerLinkActive="active" (click)="toggle()">
+                    <i class="fa fa-fw fa-money"></i>
+                    Profesores
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/mi-perfil" routerLinkActive="active" (click)="toggle()">
+                    <i class="fa fa-fw fa-shopping-cart"></i>
+                    Perfil
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/reuniones" routerLinkActive="active" (click)="toggle()">
                     <i class="fa fa-fw fa-money"></i>
                     Reuniones
+                </a>
+            </li>
+            <li class="nav-item" *ngIf="authService.isAdmin()">
+                <a class="nav-link" routerLink="/usuarios" routerLinkActive="active" (click)="toggle()">
+                    <i class="fa fa-fw fa-users"></i>
+                    Usuarios
                 </a>
             </li>
             <li class="nav-item">

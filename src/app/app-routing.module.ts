@@ -27,6 +27,14 @@ const routes: Routes = [
       )
   },
   {
+    path: 'profesores',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./module/usuarios/usuarios.module').then(
+        (module) => module.UsuariosModule
+      )
+  },
+  {
     path: 'mi-perfil',
     canActivate: [AuthGuard],
     loadChildren: () =>

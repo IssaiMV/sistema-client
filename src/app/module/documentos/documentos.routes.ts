@@ -9,13 +9,17 @@ const v2Routes: Routes = [
         component: MostrarDocumentosComponent,
     },
     {
+        path: 'profesor/:id',
+        component: MostrarDocumentosComponent,
+    },
+    {
         path: 'crear',
         component: CrearDocumentoComponent,
     },
     {
         path: ':id/editar',
         component: EditarDocumentoComponent,
-    },
+    }
 
 
 ]
