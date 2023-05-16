@@ -16,6 +16,9 @@ export class EncuestaHttpService {
   getEncuestas(): Observable<Encuesta[]> {
     return this.http.get<Encuesta[]>(this.baseUrl);
   }
+  getGraficas(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + '/graficas');
+  }
 
   getEncuesta(id: number): Observable<Encuesta> {
     return this.http.get<Encuesta>(`${this.baseUrl}/${id}`);

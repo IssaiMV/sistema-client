@@ -18,9 +18,7 @@ export class EditarDocumentoComponent {
   constructor(
     private fb: FormBuilder,
     private documentoService: DocumentoHttpService,
-    private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router,
   ) {
     this.documentoForm = this.fb.group({
       nombre: ['', Validators.required],

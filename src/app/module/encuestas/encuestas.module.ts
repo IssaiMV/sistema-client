@@ -4,13 +4,15 @@ import { ContestarEncuestaComponent } from './pages/contestar-encuesta/contestar
 import { MostrarEncuestasComponent } from './pages/mostrar-encuestas/mostrar-encuestas.component';
 import { ENCUESTAS_ROUTES } from './encuestas.routes';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditarEncuestaComponent } from './pages/editar-encuesta/editar-encuesta.component';
 
 
 
 @NgModule({
   declarations: [
     ContestarEncuestaComponent,
-    MostrarEncuestasComponent
+    MostrarEncuestasComponent,
+    EditarEncuestaComponent
   ],
   imports: [
     CommonModule,

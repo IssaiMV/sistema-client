@@ -38,4 +38,15 @@ export class MostrarEncuestasComponent {
       }
     });
   }
+
+  eliminarEncuesta(encuesta: Encuesta) {
+    if (confirm(`¿Está seguro que desea eliminar la encuesta de ${encuesta.unidadDeAprendizaje.nombre} en ${encuesta.semestreGrupo.semestre.nombre} - ${encuesta.semestreGrupo.grupo.nombre}?`)) {
+      if (encuesta.id) {
+        this.encuestaService.deleteEncuesta(encuesta.id)
+          .subscribe(() => {
+            this.encuestas = this.encuestas.filter(encuesta => encuesta.id !== encuesta.id);
+          });
+      }
+    }
+  }
 }

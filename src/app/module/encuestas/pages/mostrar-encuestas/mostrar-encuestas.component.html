@@ -18,7 +18,7 @@
                     <th scope="col">Cantidad de Alumnos</th>
                     <th scope="col">Cantidad de Aprobados</th>
                     <th scope="col">Cantidad de Reprobados</th>
-                    <th scope="col">Observaciones</th>
+                    <th scope="col" *ngIf="esPropietario">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,7 +30,12 @@
                     <td>{{ encuesta.cantidadAlumnos }}</td>
                     <td>{{ encuesta.cantidadAprobados }}</td>
                     <td>{{ encuesta.cantidadReprobados }}</td>
-                    <td>{{ encuesta.observaciones }}</td>
+                    <td *ngIf="esPropietario">
+                        <a routerLink="/encuestas/{{ encuesta.id }}/editar/" class="btn btn-primary btn-sm mr-1">
+                            <i class="bi bi-pencil-square">Editar</i>
+                        </a>
+                        <button class="btn btn-sm btn-danger" (click)="eliminarEncuesta(encuesta)">Eliminar</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

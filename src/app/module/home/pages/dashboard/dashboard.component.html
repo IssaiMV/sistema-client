@@ -1,12 +1,62 @@
 <div class="container">
     <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="!isCoordinador">
             <div class="card">
                 <div class="card-header">
                     Bienvenido al Panel de Control
                 </div>
                 <div class="card-body">
                     <p>Has iniciado sesión correctamente y ahora estás viendo el panel de control.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" *ngIf="isCoordinador">
+            <div class="card">
+                <div class="card-header">
+                    Cantidad de alumnos reprobados por materia
+                </div>
+                <div class="card-body">
+                    <canvas id="reprobadosPorUnidadDeAprendizaje"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" *ngIf="isCoordinador">
+            <div class="card">
+                <div class="card-header">
+                    Cantidad de alumnos reprobados por profesor
+                </div>
+                <div class="card-body">
+                    <canvas id="reprobadosPorProfesor"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" *ngIf="isCoordinador">
+            <div class="card">
+                <div class="card-header">
+                    Problematicas comunes de los grupos
+                </div>
+                <div class="card-body">
+                    <canvas id="problematicasGrupo"></canvas>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" *ngIf="isCoordinador">
+            <div class="card">
+                <div class="card-header">
+                    Problematicas temas complicados
+                </div>
+                <div class="card-body">
+                    <ngb-accordion [closeOthers]="true" activeIds="static-1">
+                        <ngb-panel *ngFor="let dificultad of listaDificultadesPorGrupo; let i=index" [id]="'static-'+i">
+                            <ng-template ngbPanelTitle>
+                                <span>{{dificultad?.razon}}</span>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                {{dificultad?.observacion}}
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="container">
-        <h1 class="text-center">Contestar nueva Encuesta</h1>
+        <h1 class="text-center">Editar Encuesta</h1>
         <form [formGroup]="encuestaForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
                 <label for="semestre" class="form-label">Semestre</label>
@@ -67,7 +67,7 @@
                         dificultad</button>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="encuestaForm.invalid">Guardar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="encuestaForm.invalid">Editar</button>
         </form>
     </div>
 </div>

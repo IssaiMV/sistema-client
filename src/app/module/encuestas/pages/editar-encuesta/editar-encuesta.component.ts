@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/authentication/auth.service';
 import { EncuestaHttpService } from 'src/app/core/http/encuesta/encuesta.service';
 import { ProblematicasGrupoHttpService } from 'src/app/core/http/problematicas-grupo/problematicas.grupo.http.service';
@@ -14,17 +14,19 @@ import { Semestre } from 'src/app/shared/models/semestre.model';
 import { UnidadDeAprendizaje } from 'src/app/shared/models/unidad-de-aprendizaje.model';
 
 @Component({
-  selector: 'app-contestar-encuesta',
-  templateUrl: './contestar-encuesta.component.html',
-  styleUrls: ['./contestar-encuesta.component.scss']
+  selector: 'app-editar-encuesta',
+  templateUrl: './editar-encuesta.component.html',
+  styleUrls: ['./editar-encuesta.component.scss']
 })
-export class ContestarEncuestaComponent {
+export class EditarEncuestaComponent {
   encuestaForm: FormGroup;
   semestres: Semestre[] = [];
   grupos: Grupo[] = [];
   unidades: UnidadDeAprendizaje[] = [];
   semestreGrupos: SemestreGrupo[] = [];
   problematicas: ProblematicaGrupo[] = [];
+  encuestaId!: number;
+
 
   constructor(
     private fb: FormBuilder,
@@ -33,7 +35,8 @@ export class ContestarEncuestaComponent {
     private semestreService: SemestreHttpService,
     private unidadService: UnidadDeAprendizajeHttpService,
     private router: Router,
-    private problematicasGrupoService: ProblematicasGrupoHttpService
+    private problematicasGrupoService: ProblematicasGrupoHttpService,
+    private route: ActivatedRoute
   ) {
     this.encuestaForm = this.fb.group({
       cantidadAlumnos: ['', [Validators.required, Validators.min(0)]],
@@ -50,6 +53,7 @@ export class ContestarEncuestaComponent {
   }
 
   ngOnInit(): void {
+    this.encuestaId = Number(this.route.snapshot.paramMap.get('id'));
     this.semestreService.getAll().subscribe((semestres: Array<Semestre>) => {
       this.semestres = semestres;
     });
@@ -59,7 +63,17 @@ export class ContestarEncuestaComponent {
     this.problematicasGrupoService.getAll().subscribe((problematicas: Array<ProblematicaGrupo>) => {
       this.problematicas = problematicas;
     });
+    this.encuestaService.getEncuesta(this.encuestaId).subscribe((encuesta: Encuesta) => {
+      this.buscarSemestre(encuesta.semestreGrupo.semestreId);
+      this.encuestaForm.patchValue(encuesta)
+      this.semestre?.setValue(encuesta.semestreGrupo.semestreId)
+      this.grupo?.setValue(encuesta.semestreGrupo.grupoId)
+      this.unidadDeAprendizaje?.setValue(encuesta.unidadDeAprendizajeId)
+    })
   }
+
+
+
   get cantidadAlumnos() {
     return this.encuestaForm.get('cantidadAlumnos');
   }
@@ -85,6 +99,9 @@ export class ContestarEncuestaComponent {
   }
   get mayorDificultad(): any | null {
     return this.encuestaForm.get('mayorDificultad');
+  }
+  get problematica(): any | null {
+    return this.encuestaForm.get('problematica');
   }
 
   initMayorDificultad() {
@@ -130,7 +147,11 @@ export class ContestarEncuestaComponent {
 
   onSemestreChange(): void {
     const semestre = this.semestre?.value;
-    this.semestreService.getAllGrupos(semestre).subscribe({
+    this.buscarSemestre(parseInt(semestre));
+  }
+
+  buscarSemestre(id: number) {
+    this.semestreService.getAllGrupos(id).subscribe({
       next: (semestreGrupos: Array<SemestreGrupo>) => {
         this.grupos = semestreGrupos.map((semestreGrupo: SemestreGrupo) => semestreGrupo.grupo);
         this.semestreGrupos = semestreGrupos;
@@ -150,4 +171,3 @@ export class ContestarEncuestaComponent {
     }
   }
 }
-
